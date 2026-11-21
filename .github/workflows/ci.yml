@@ -45,7 +45,7 @@ jobs:
       - name: Configure CMake
         run: |
           if [ "${{ matrix.asan }}" = "ON" ]; then
-            EXTRA_FLAGS="-DAEROMATCH_ENABLE_ASAN=ON -DCMAKE_BUILD_TYPE=Debug -DAEROMATCH_BUILD_BENCHMARKS=OFF"
+            EXTRA_FLAGS="-DAEROMATCH_ENABLE_ASAN=ON -DCMAKE_BUILD_TYPE=Debug -DAEROMATCH_BUILD_BENCHMARKS=OFF -DAEROMATCH_BUILD_BENCHMARKS=OFF"
           else
             EXTRA_FLAGS="-DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DAEROMATCH_BUILD_BENCHMARKS=ON"
           fi
