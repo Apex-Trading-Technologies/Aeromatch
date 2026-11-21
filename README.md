@@ -106,7 +106,7 @@ public:
 ```bash
 # Clone the repository
 git clone https://github.com/Apex-Trading-Technologies/Aeromatch.git
-cd aeromatch-oss
+cd Aeromatch
 
 # Configure CMake with unit tests
 cmake -B build -DCMAKE_BUILD_TYPE=Release -DAEROMATCH_BUILD_TESTS=ON
