@@ -62,4 +62,7 @@ jobs:
         run: ctest --test-dir build --output-on-failure --verbose
 
       - name: Smoke Test Binary
-        run: ./build/aeromatch --test-run
+        run: |
+          BIN=$(find build -maxdepth 2 -type f -name "aeromatch" -executable | head -n 1)
+          echo "Running smoke test on: $BIN"
+          "$BIN" --test-run

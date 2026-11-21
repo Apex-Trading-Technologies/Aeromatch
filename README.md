@@ -1,6 +1,6 @@
 # AeroMatch
 
-[![CI](https://github.com/Apex-Trading-Technologies/aeromatch/actions/workflows/ci.yml/badge.svg)](https://github.com/Apex-Trading-Technologies/aeromatch/actions/workflows/ci.yml)
+[![CI](https://github.com/Apex-Trading-Technologies/Aeromatch/actions/workflows/ci.yml/badge.svg)](https://github.com/Apex-Trading-Technologies/Aeromatch/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.cppreference.com/w/cpp/20)
 
@@ -105,7 +105,7 @@ public:
 
 ```bash
 # Clone the repository
-git clone https://github.com/Apex-Trading-Technologies/aeromatch-oss.git
+git clone https://github.com/Apex-Trading-Technologies/Aeromatch.git
 cd aeromatch-oss
 
 # Configure CMake with unit tests
