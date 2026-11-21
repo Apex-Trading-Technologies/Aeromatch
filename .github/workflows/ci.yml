@@ -1,0 +1,65 @@
+name: AeroMatch CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    name: Build & Test (${{ matrix.compiler }} - ${{ matrix.build_type }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [gcc-13, gcc-14, clang-18]
+        build_type: [Release, Debug]
+        include:
+          - compiler: gcc-14
+            build_type: Sanitizers
+            asan: ON
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Toolchain
+        run: |
+          sudo apt-get update
+          if [ "${{ matrix.compiler }}" = "gcc-13" ]; then
+            sudo apt-get install -y gcc-13 g++-13
+            echo "CC=gcc-13" >> $GITHUB_ENV
+            echo "CXX=g++-13" >> $GITHUB_ENV
+          elif [ "${{ matrix.compiler }}" = "gcc-14" ]; then
+            sudo apt-get install -y gcc-14 g++-14
+            echo "CC=gcc-14" >> $GITHUB_ENV
+            echo "CXX=g++-14" >> $GITHUB_ENV
+          elif [ "${{ matrix.compiler }}" = "clang-18" ]; then
+            sudo apt-get install -y clang-18
+            echo "CC=clang-18" >> $GITHUB_ENV
+            echo "CXX=clang++-18" >> $GITHUB_ENV
+          fi
+          sudo apt-get install -y cmake ninja-build
+
+      - name: Configure CMake
+        run: |
+          EXTRA_FLAGS=""
+          if [ "${{ matrix.asan }}" = "ON" ]; then
+            EXTRA_FLAGS="-DAEROMATCH_ENABLE_ASAN=ON -DCMAKE_BUILD_TYPE=Debug"
+          else
+            EXTRA_FLAGS="-DCMAKE_BUILD_TYPE=${{ matrix.build_type }}"
+          fi
+          cmake -B build -G Ninja \
+            $EXTRA_FLAGS \
+            -DAEROMATCH_BUILD_TESTS=ON \
+            -DAEROMATCH_BUILD_BENCHMARKS=ON
+
+      - name: Compile Core & Tests
+        run: cmake --build build -j$(nproc)
+
+      - name: Execute CTest Suite
+        run: ctest --test-dir build --output-on-failure --verbose
+
+      - name: Smoke Test Binary
+        run: ./build/aeromatch --test-run
