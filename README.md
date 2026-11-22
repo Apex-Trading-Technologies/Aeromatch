@@ -52,9 +52,10 @@ flowchart TD
 
 ## Performance Benchmarks
 
-Measured on host machine running Google Benchmark v1.8.3 under `-O3` release flags:
-- **Processor**: Intel(R) Core(TM) i3-1005G1 CPU @ 1.20GHz (4 vCPUs, 3.40 GHz Turbo, 4MB L3 Cache)
-- **OS & Toolchain**: Ubuntu 24.04 LTS (Linux 7.2.15 x86_64), GCC 13.3.0, C++20
+Measured on bare-metal consumer laptop hardware running Google Benchmark v1.8.3 under `-O3` release flags:
+- **Processor**: Intel(R) Core(TM) i3-1005G1 (Ice Lake, 2 Cores / 4 Threads, 1.20 GHz Base / 3.40 GHz Turbo, 4 MB L3 Cache)
+- **Memory**: 12 GB DDR4 (11 GiB usable)
+- **OS & Toolchain**: Pop!_OS 24.04 LTS (Ubuntu-based, Linux 7.2.15 x86_64), GCC 13.3.0, C++20
 
 | Benchmark Scenario | Measured Throughput | CPU Time / Operation | Iterations Verified |
 | :--- | :--- | :--- | :--- |
@@ -66,6 +67,8 @@ Measured on host machine running Google Benchmark v1.8.3 under `-O3` release fla
 | **Lock-Free SPSC RingBuffer (MT)** | **86.66 Million msgs/sec** | **11.5 ns** cross-thread | 52,700,000 transfers |
 
 All operations run with zero heap allocations on the critical path, deterministic O(1) order pool reclamation, and bounded latency.
+
+> **Hardware Portability:** Also compiled and verified on legacy bare-metal x86-64 hardware (Dell Latitude 3330, 3rd Gen Intel Core i5-3337U Ivy Bridge, 2 Cores / 4 Threads @ 1.80 GHz, 8 GB RAM — no AVX2 required).
 
 ---
 
@@ -105,7 +108,7 @@ public:
 
 ```bash
 # Clone the repository
-git clone https://github.com/Apex-Trading-Technologies/Aeromatch.git
+git clone [https://github.com/Apex-Trading-Technologies/Aeromatch.git](https://github.com/Apex-Trading-Technologies/Aeromatch.git)
 cd Aeromatch
 
 # Configure CMake with unit tests
